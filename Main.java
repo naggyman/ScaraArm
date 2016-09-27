@@ -153,6 +153,7 @@ public class Main{
     
     public void save_pwm(){
         String fname = UIFileChooser.save();
+        tool_path.convert_drawing_to_angles(drawing,arm,fname);
         tool_path.convert_angles_to_pwm(arm);
         tool_path.save_pwm_file(fname);
     }
