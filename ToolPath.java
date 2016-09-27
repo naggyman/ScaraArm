@@ -1,5 +1,3 @@
-
-
 /**
  * ToolPath stores motor contol signals (pwm)
  * and motor angles
@@ -118,7 +116,7 @@ public class ToolPath
     // save file with motor control values
     public void save_pwm_file(String fname){
         for ( int i = 0 ; i < pwm1_vector.size(); i++){
-            UI.printf(" t1=%d t2=%d pen=%d\n",
+            UI.printf(" pwm1=%d pwm2=%d pen=%d\n",
                 pwm1_vector.get(i),pwm2_vector.get(i),pen_vector.get(i));
         }
 
@@ -130,7 +128,7 @@ public class ToolPath
             Writer w = new BufferedWriter(osw);
             String str_out;
             for (int i = 1; i < pwm1_vector.size() ; i++){
-                str_out = String.format("%3.1f,%3.1f,%d\n",
+                str_out = String.format("%d,%d,%d\n",
                     pwm1_vector.get(i),pwm2_vector.get(i),pen_vector.get(i));
                 w.write(str_out);
             }
