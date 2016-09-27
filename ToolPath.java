@@ -118,7 +118,7 @@ public class ToolPath
     // save file with motor control values
     public void save_pwm_file(String fname){
         for ( int i = 0 ; i < pwm1_vector.size(); i++){
-            UI.printf(" t1=%3.1f t2=%3.1f pen=%d\n",
+            UI.printf(" t1=%d t2=%d pen=%d\n",
                 pwm1_vector.get(i),pwm2_vector.get(i),pen_vector.get(i));
         }
 
