@@ -1,4 +1,3 @@
-
 /**
  * Class represents SCARA robotic arm.
  * 
@@ -245,13 +244,15 @@ public class Arm
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
-        int pwm = 0;
+        //int pwm = (int) (1450 + (theta1 + 116) * -10);
+        // + 1450
+        int pwm = (int) (1450 + (theta1 - 116) * -10);
         return pwm;
     }
     // ditto for motor 2
     public int get_pwm2(){
-        int pwm =0;
-        //pwm = (int)(pwm2_90 + (theta2 - 90)*pwm2_slope);
+        int pwm = (int) (1350 + (theta2 + 51) * -11.5789);
+        // + 1350
         return pwm;
     }
 
