@@ -1,4 +1,3 @@
- 
 /* Code for Assignment ?? 
  * Name:
  * Usercode:
@@ -23,6 +22,7 @@ public class Main{
     // 2 - enter path. Each click adds point  
     // 3 - enter path pause. Click does not add the point to the path
 
+    private String PI_IP = "192.168.fuckyou";
     /**      */
     public Main(){
         UI.initialise();
@@ -34,6 +34,7 @@ public class Main{
         UI.addButton("Load path Ang:Play", this::load_ang);
         UI.addButton("Save PWM", this::save_pwm);
         UI.addButton("Print PWM", this::print_pwm);
+        UI.addButton("Transfer to Pi", this::transfer);
 
         // UI.addButton("Quit", UI::quit);
         UI.setMouseMotionListener(this::doMouse);
@@ -115,7 +116,7 @@ public class Main{
         }
 
     }
-    
+
     public void save_xy(){
         state = 0;
         String fname = UIFileChooser.save();
@@ -148,20 +149,45 @@ public class Main{
     }
 
     public void load_ang(){
-    
+
     }
-    
+
     public void save_pwm(){
         String fname = UIFileChooser.save();
         tool_path.convert_drawing_to_angles(drawing,arm,fname);
         tool_path.convert_angles_to_pwm(arm);
         tool_path.save_pwm_file(fname);
     }
-    
+
     public void print_pwm(){
         UI.println( arm.get_pwm1() + " " + arm.get_pwm2());
     }
-    
+
+    public void transfer(){
+        String fname = "temp.pwm";
+        tool_path.convert_drawing_to_angles(drawing,arm,fname);
+        tool_path.convert_angles_to_pwm(arm);
+        tool_path.save_pwm_file(fname);
+        
+        try{
+            //String command = "ping -c 3 google.com";
+            String command = "echo hai";
+            StringBuffer output = new StringBuffer();
+            Process p;
+            p = Runtime.getRuntime().exec(command);
+            p.waitFor();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line = "";
+            while((line = reader.readLine()) != null){
+                output.append(line+"\n");
+            }
+            UI.println(output.toString());
+        }
+        catch(Exception e){
+            UI.println("Error: " + e);
+        }
+    }
+
     public void run() {
         while(true) {
             arm.draw();
@@ -174,4 +200,3 @@ public class Main{
     }    
 
 }
-
