@@ -175,6 +175,7 @@ public class Arm
         double yj11 = ya1 + h1 * Math.sin(pi/2 - alpha);
         double xj12 = xa1 - h1 * Math.cos(pi/2 - alpha);
         double yj12 = ya1 - h1 * Math.sin(pi/2 - alpha);
+        
 
         double posstheta1 = Math.atan2(yj11-ym1, xj11-xm1);
         double posstheta2 = Math.atan2(yj12-ym1, xj12-xm1);
@@ -214,6 +215,11 @@ public class Arm
         posstheta1 = Math.atan2(yj21-ym2, xj21-xm2);
         posstheta2 = Math.atan2(yj22-ym2, xj22-xm2);
         
+        if((xt + (xt - xj11) == xj21) && (yt + (yt - yj11) == yj21))) { //singularity, might need to be more general
+            UI.println("Singularity position");
+            valid_state = false;
+            return; /
+        }
         theta2 = Math.max(posstheta1,posstheta2);
         if(theta2 > 0)
             theta2 = Math.min(posstheta1, posstheta2);
