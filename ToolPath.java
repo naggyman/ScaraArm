@@ -41,7 +41,7 @@ public class ToolPath
     public ToolPath()
     {
         // initialise instance variables
-        n_steps = 50;
+        n_steps = 2;
         theta1_vector = new ArrayList<Double>();
         theta2_vector = new ArrayList<Double>();
         pen_vector = new ArrayList<Integer>();
@@ -67,9 +67,9 @@ public class ToolPath
                 theta1_vector.add(arm.get_theta1()*180/Math.PI);
                 theta2_vector.add(arm.get_theta2()*180/Math.PI);
                 if (p0.get_pen()){ 
-                    pen_vector.add(1);
+                    pen_vector.add(2000);
                 } else {
-                    pen_vector.add(0);
+                    pen_vector.add(1000);
                 }
             }
         }
@@ -95,6 +95,7 @@ public class ToolPath
                     theta1_vector.get(i),theta2_vector.get(i),pen_vector.get(i));
                 w.write(str_out);
             }
+            w.write("1500,1500,1000");
             w.close();
         } catch (IOException e) {
             UI.println("Problem writing to the file statsTest.txt");
