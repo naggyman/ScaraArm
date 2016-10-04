@@ -52,10 +52,10 @@ public class Arm
      */
     public Arm()
     {
-        xm1 = 290; // set motor coordinates
-        ym1 = 372;
-        xm2 = 379;
-        ym2 = 374;
+        xm1 = 292; // set motor coordinates
+        ym1 = 424;
+        xm2 = 375;
+        ym2 = 425;
         r = 156.0;
         theta1 = -90.0*Math.PI/180.0; // initial angles of the upper arms
         theta2 = -90.0*Math.PI/180.0;
@@ -154,6 +154,12 @@ public class Arm
         yt = yt_new;
         valid_state = true;
         double pi = Math.PI;
+        
+        if(yt_new >= ym1 || yt_new >= ym2){
+            UI.println("Arm - can not reach");
+            valid_state = false;
+            return;
+        }
 
         double dx1 = xt - xm1; 
         double dy1 = yt - ym1;
@@ -175,7 +181,6 @@ public class Arm
         double yj11 = ya1 + h1 * Math.sin(pi/2 - alpha);
         double xj12 = xa1 - h1 * Math.cos(pi/2 - alpha);
         double yj12 = ya1 - h1 * Math.sin(pi/2 - alpha);
-        
 
         double posstheta1 = Math.atan2(yj11-ym1, xj11-xm1);
         double posstheta2 = Math.atan2(yj12-ym1, xj12-xm1);
@@ -214,12 +219,19 @@ public class Arm
 
         posstheta1 = Math.atan2(yj21-ym2, xj21-xm2);
         posstheta2 = Math.atan2(yj22-ym2, xj22-xm2);
-        
-        if((xt + (xt - xj11) == xj21) && (yt + (yt - yj11) == yj21))) { //singularity, might need to be more general
-            UI.println("Singularity position");
+
+        if((xt + (xt - xj11) == xj21) && (yt + (yt - yj11) == yj21)){
+            UI.println("Singularity Position");
             valid_state = false;
-            return; /
+            return;
         }
+        
+        if(xj11 >= xj22 || xj22 <= xj11){
+            UI.println("Singularity Position");
+            valid_state = false;
+            return;
+        }
+        
         theta2 = Math.max(posstheta1,posstheta2);
         if(theta2 > 0)
             theta2 = Math.min(posstheta1, posstheta2);
@@ -250,9 +262,9 @@ public class Arm
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
-        //int pwm = (int) (1450 + (theta1 + 116) * -10);
+        int pwm = (int) (1450 + (theta1 + 117) * -10);
         // + 1450
-        int pwm = (int) (1450 + (theta1 - 116) * -10);
+        //int pwm = (int) (1450 + (theta1 - 116) * -10);
         return pwm;
     }
     // ditto for motor 2
