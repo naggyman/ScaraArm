@@ -170,7 +170,6 @@ public class Arm
             valid_state = false;
             return;
         }
-        double l1 = d1/2;
         double h1 = Math.sqrt((r*r) - (d1/2) * (d1/2));
 
         double xa1 = xm1 + 0.5 * (xt - xm1);
